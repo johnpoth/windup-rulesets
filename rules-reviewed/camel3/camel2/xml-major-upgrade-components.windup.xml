@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<ruleset xmlns="http://windup.jboss.org/schema/jboss-ruleset" id="xml-major-upgrade-components"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://windup.jboss.org/schema/jboss-ruleset http://windup.jboss.org/schema/jboss-ruleset/windup-jboss-ruleset.xsd">
+    <metadata>
+        <description>
+            XML Rules for Camel components that have upgraded one of their dependency that may break backward compatibility
+        </description>
+        <dependencies>
+            <addon id="org.jboss.windup.rules,windup-rules-java,3.0.0.Final" />
+        </dependencies>
+        <sourceTechnology id="camel" versionRange="[2,3)"/>
+        <targetTechnology id="camel" versionRange="[3,)" />
+    </metadata>
+    <rules>
+        <rule id="xml-major-upgrade-components-00000">
+            <when>
+                <project>
+                    <artifact groupId="org.apache.camel" artifactId="camel-fhir" />
+                </project>
+            </when>
+            <perform>
+                <hint title="`org.apache.camel:camel-fhir` default FHIR specification has changed from DSTU3 to R4" effort="2" category-id="information" >
+                    <message>The default FHIR specification in the `org.apache.camel:camel-fhir` artifact has changed from DSTU3 to R4. Therefore if DSTU3 is desired it has to be explicitely set.</message>
+                    <link title="Camel 3 - Migration Guide: FHIR" href="https://camel.apache.org/manual/latest/camel-3-migration-guide.html#_fhir" />
+                </hint>
+            </perform>
+        </rule>
+    </rules>
+</ruleset>
+
